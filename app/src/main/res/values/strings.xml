@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">Ishihara 21Feb15</string>
+    <string name="app_name">My Ishihara</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_show_score">ShowScoreActivity</string>
 </resources>
