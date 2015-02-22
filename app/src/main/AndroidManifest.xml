@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="appewtc.masterung.ishihara21feb15">
+    package="appewtc.masterung.ishihara21feb15" >
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ishihara_10"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".SplashScreen"
-            android:screenOrientation="portrait">
-
+            android:screenOrientation="portrait" >
             <intent-filter>
-
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
-
             </intent-filter>
-
         </activity>
-
-
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ShowScoreActivity"
             android:label="@string/title_activity_show_score"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HowToUseActivity"
+            android:label="@string/title_activity_how_to_use" >
+        </activity>
+        <activity
+            android:name=".AboutMeActivity"
+            android:label="@string/title_activity_about_me" >
+        </activity>
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package appewtc.masterung.ishihara21feb15;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -266,7 +267,23 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        
+        switch (item.getItemId()) {
+            case R.id.itemHowToUse:
+
+                Intent objIntent = new Intent(MainActivity.this, HowToUseActivity.class);
+                startActivity(objIntent);
+
+                break;
+            case R.id.itemAboutMe:
+
+                //Intent to WebView
+                Intent objIntentWebView = new Intent(Intent.ACTION_VIEW);
+                objIntentWebView.setData(Uri.parse("http://androidthai.in.th/about-me.html"));
+                startActivity(objIntentWebView);
+                
+
+                break;
+        }
 
         return super.onOptionsItemSelected(item);
     }
