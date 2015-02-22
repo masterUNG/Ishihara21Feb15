@@ -1,50 +1,43 @@
 package appewtc.masterung.ishihara21feb15;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
 
-public class ShowScoreActivity extends ActionBarActivity {
+public class SplashScreen extends ActionBarActivity {
 
-    private TextView txtShowScore;
-    private int intMyScore;
+    private Handler objHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_score);
+        setContentView(R.layout.activity_splash_screen);
 
-        //Initial Widget
-        txtShowScore = (TextView) findViewById(R.id.txtShowScore);
+        objHandler = new Handler();
+        objHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent objIntent = new Intent(SplashScreen.this, MainActivity.class);
+                startActivity(objIntent);
+                finish();
+            }
+        }, 7000);
 
-        //Get Value from Intent
-        intMyScore = getIntent().getExtras().getInt("Score");
-
-        //Set Text
-        txtShowScore.setText(String.valueOf(intMyScore) + "/10" );
-
+        //Sound Effect
+        MediaPlayer soundEffect = MediaPlayer.create(getBaseContext(), R.raw.intro_start_horse);
+        soundEffect.start();
     }   // onCreate
-
-    public void clickPlay(View view) {
-        Intent objIntent = new Intent(ShowScoreActivity.this, MainActivity.class);
-        startActivity(objIntent);
-        finish();
-    }
-
-    public void clickExti(View view) {
-        finish();
-    }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_show_score, menu);
+        getMenuInflater().inflate(R.menu.menu_splash_screen, menu);
         return true;
     }
 

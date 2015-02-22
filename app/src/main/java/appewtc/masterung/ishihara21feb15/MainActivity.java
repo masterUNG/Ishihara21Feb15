@@ -1,8 +1,10 @@
 package appewtc.masterung.ishihara21feb15;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,8 +23,9 @@ public class MainActivity extends ActionBarActivity {
     private RadioGroup ragChoice;
     private RadioButton radChoice1, radChoice2, radChoice3, radChoice4;
     private Button btnAnswer;
-    private int intRadioButton, intIndex;
-
+    private int intRadioButton, intIndex, intUserChoose[], intTrueAnswer[], intScore;
+    private MyModel objMyModel;
+    private String strChoice[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +41,80 @@ public class MainActivity extends ActionBarActivity {
         //Radio Controller
         radioController();
 
+        //About Model
+        aboutModel();
+
 
     }   // onCreate
+
+    private void aboutModel() {
+
+        objMyModel = new MyModel();
+        objMyModel.setOnMyModelChangeListener(new MyModel.OnMyModelChangeListener() {
+            @Override
+            public void onMyModelChangeListener(MyModel myModel) {
+
+                switch (myModel.getIntButton()) {
+                    case 2:
+                        imvIshihara.setImageResource(R.drawable.ishihara_02);
+                        strChoice = getResources().getStringArray(R.array.time2);
+                        setUpChoice();
+                        break;
+                    case 3:
+                        imvIshihara.setImageResource(R.drawable.ishihara_03);
+                        strChoice = getResources().getStringArray(R.array.time3);
+                        setUpChoice();
+                        break;
+                    case 4:
+                        imvIshihara.setImageResource(R.drawable.ishihara_04);
+                        strChoice = getResources().getStringArray(R.array.time4);
+                        setUpChoice();
+                        break;
+                    case 5:
+                        imvIshihara.setImageResource(R.drawable.ishihara_05);
+                        strChoice = getResources().getStringArray(R.array.time5);
+                        setUpChoice();
+                        break;
+                    case 6:
+                        imvIshihara.setImageResource(R.drawable.ishihara_06);
+                        strChoice = getResources().getStringArray(R.array.time6);
+                        setUpChoice();
+                        break;
+                    case 7:
+                        imvIshihara.setImageResource(R.drawable.ishihara_07);
+                        strChoice = getResources().getStringArray(R.array.time7);
+                        setUpChoice();
+                        break;
+                    case 8:
+                        imvIshihara.setImageResource(R.drawable.ishihara_08);
+                        strChoice = getResources().getStringArray(R.array.time8);
+                        setUpChoice();
+                        break;
+                    case 9:
+                        imvIshihara.setImageResource(R.drawable.ishihara_09);
+                        strChoice = getResources().getStringArray(R.array.time9);
+                        setUpChoice();
+                        break;
+                    case 10:
+                        imvIshihara.setImageResource(R.drawable.ishihara_10);
+                        strChoice = getResources().getStringArray(R.array.time10);
+                        setUpChoice();
+                        break;
+                }   // switch
+
+            }   // event
+        });
+
+    }   // aboutModel
+
+    private void setUpChoice() {
+
+        radChoice1.setText(strChoice[0]);
+        radChoice2.setText(strChoice[1]);
+        radChoice3.setText(strChoice[2]);
+        radChoice4.setText(strChoice[3]);
+
+    }   // setUpChoice
 
     private void radioController() {
 
@@ -85,10 +160,87 @@ public class MainActivity extends ActionBarActivity {
                 MediaPlayer buttonSound = MediaPlayer.create(getBaseContext(), R.raw.effect_btn_long);
                 buttonSound.start();
 
+                //Check Zero
+                checkZero();
+
+
             }   // event
         });
 
     }   // buttonController
+
+    private void checkZero() {
+
+        if (intRadioButton == 0) {
+
+            MyAlertDialot objMyAlert = new MyAlertDialot();
+            objMyAlert.myDialog(MainActivity.this);
+
+        } else {
+
+            checkScore();
+
+            checkTimes();
+
+        }
+
+    }   // checkZero
+
+    private void checkScore() {
+
+        //Deceleration
+        intUserChoose = new int[10];
+        intTrueAnswer = new int[10];
+        intTrueAnswer[0] = 1;
+        intTrueAnswer[1] = 2;
+        intTrueAnswer[2] = 3;
+        intTrueAnswer[3] = 1;
+        intTrueAnswer[4] = 2;
+        intTrueAnswer[5] = 3;
+        intTrueAnswer[6] = 1;
+        intTrueAnswer[7] = 2;
+        intTrueAnswer[8] = 4;
+        intTrueAnswer[9] = 4;
+
+        //Setup intUserChoose
+        intUserChoose[intIndex] = intRadioButton;
+
+        //Increase Score
+        if (intUserChoose[intIndex] == intTrueAnswer[intIndex] ) {
+            intScore += 1;
+        }
+
+    }   //checkScore
+
+    private void checkTimes() {
+
+        if (intIndex == 9) {
+
+            //Intent to ShowScoreActivity
+            Intent objIntent = new Intent(MainActivity.this, ShowScoreActivity.class);
+            objIntent.putExtra("Score", intScore);
+            Log.d("test", "Score = " + Integer.toString(intScore));
+            startActivity(objIntent);
+            finish();
+
+        } else {
+
+            //Decrease intIndex
+            intIndex += 1;
+
+            //Setup TextView
+            txtQuestion.setText(Integer.toString(intIndex + 1) + ". What is this ?");
+
+            //sent value to Model
+            objMyModel.setIntButton(intIndex + 1);
+
+            //Clear Answer
+            ragChoice.clearCheck();
+
+
+        }
+
+    }   // checkTime
 
     private void initialWidget() {
 
@@ -113,15 +265,8 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        
 
         return super.onOptionsItemSelected(item);
     }
