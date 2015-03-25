@@ -24,7 +24,7 @@ public class MainActivity extends ActionBarActivity {
     private RadioGroup ragChoice;
     private RadioButton radChoice1, radChoice2, radChoice3, radChoice4;
     private Button btnAnswer;
-    private int intRadioButton, intIndex, intUserChoose[], intTrueAnswer[], intScore;
+    private int intRadioButton, intIndex, intUserChoose[], intTrueAnswer[], intScore, intDrawable[];
     private MyModel objMyModel;
     private String strChoice[];
 
@@ -35,6 +35,8 @@ public class MainActivity extends ActionBarActivity {
 
         //Initial Widget
         initialWidget();
+
+        setUpDrawable();
 
         //Button Controller
         buttonController();
@@ -47,6 +49,10 @@ public class MainActivity extends ActionBarActivity {
 
 
     }   // onCreate
+
+    private void setUpDrawable() {
+
+    }
 
     private void aboutModel() {
 
